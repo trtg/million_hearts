@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0047)https://demo-indigo4health.archimedesmodel.com/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>Text 4 Health Page</title>
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery.ui.all.css" rel="stylesheet">
+        <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+        <script language="javascript" type="text/javascript">
+var locations = [ ];
+
+            $(document).ready(function ()
+            {
+                // put all your jQuery goodness in here.
+                $("#riskresults").hide();
+                $("#risktable").hide();
+                $("#page2").hide();
+                $("#page3").hide()
+                $("#page4").hide()
+                $("#optional_info").hide()
+                $("#diabetes_only").hide()
+            });
+
+            
+            function submitStuff()
+            {
+                $.ajax({
+                    crossDomain: true,
+                    type: 'post',
+                    url: 'https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health',
+                    data: collectData(),
+                    success: function (results)
+                    {
+                        //alert(results);
+                        //jsonResults = jQuery.parseJSON(results);
+                        displayData(results);
+                        console.log(results)
+                    }
+                });
+                //surescripts API currently only returns data near minneapolis
+                find_test_centers(44.979965,-93.263836,2,10)
+            }
+
+            
+
+            function collectData()
+            {
+                var allInputs = $('input')
+                       .map(function ()
+                       {
+                           return $(this).attr("name") + "=" + $(this).val()
+                       })
+                       .get()
+                       .join("&");
+                       console.log(allInputs);
+                return allInputs;
+            }
+
+            function displayData(jsonStuff)
+            {
+                //clear results
+                remainingText = "";
+                $("#displayresults").html($("#risktable").show());
+                $("#td0").html("");
+                $("#td1").html("");
+                $("#td2").html("");
+
+                anyErrors = false;
+                for (i = 0; i < 999; i++)
+                {
+                    if (jsonStuff["ErrorMessageHashMap"][i] != undefined)
+                    {
+                        anyErrors = true;
+                        break;
+                    }
+                }
+
+                if (anyErrors)
+                {
+                    remainingText += displayErrors(jsonStuff);
+                }
+                else
+                {
+                    displayRisks(jsonStuff);
+                    remainingText += displayMiscellaneous(jsonStuff);
+                }
+
+                $("#displayresults").html($("#displayresults").html() + remainingText);
+            }
+
+            function displayRisks(jsonStuff)
+            {
+                var currentRisk;
+                var currentRiskElement;
+                for (i = 0; i < jsonStuff["Risk"].length; i++)
+                {
+                    currentRisk = jsonStuff["Risk"][i];
+                    currentRiskElement = $("#riskresults").clone();
+                    $(currentRiskElement).find("#riskType").text(currentRisk["riskType"]);
+                    $(currentRiskElement).find("#risk").text(currentRisk["risk"]);
+                    $(currentRiskElement).find("#riskPercentile").text(currentRisk["riskPercentile"]);
+                    $(currentRiskElement).find("#comparisonRisk").text(currentRisk["comparisonRisk"]);
+                    $(currentRiskElement).find("#ratingForAge").text(currentRisk["ratingForAge"]);
+                    $(currentRiskElement).find("#rating").text(currentRisk["rating"]);
+                    $(currentRiskElement).show();
+                    $(currentRiskElement).appendTo("#td" + i);
+                }
+            }
+
+            function displayErrors(jsonStuff)
+            {
+                //{"ErrorMessageMap":{"1":["Invalid/Unsupported Format: age"]}
+                //{"ErrorMessageMap":{"1":["Invalid/Unsupported Format: age","Invalid/Unsupported Format: gender","Invalid/Unsupported Format: weight"]}
+                var currentError;
+                var currentErrorElement;
+                remainingText = '';
+
+                for (i = 0; i < 999; i++)
+                {
+                    if (jsonStuff["ErrorMessageHashMap"][i] != undefined)
+                    {
+                        currentError = jsonStuff["ErrorMessageHashMap"][i];
+                        for (j = 0; j < jsonStuff["ErrorMessageHashMap"][i].length; j++)
+                        {
+                            remainingText += jsonStuff["ErrorMessageHashMap"][i][j] + "<br />";
+                        }
+                        remainingText += "<br />";
+                    }
+                }
+                return remainingText;
+            }
+
+            function displayMiscellaneous(jsonStuff)
+            {
+                remainingText = '';
+                remainingText += "IncreaseInRisk: " + jsonStuff["Interventions"]["IncreaseInRisk"] + "<br />";
+                remainingText += "PercentReductionInRiskWithMedication: " + jsonStuff["Interventions"]["PercentReductionInRiskWithMedication"] + "<br />";
+                remainingText += "PercentReductionInRiskWithAdditionalModerateExercise: " + jsonStuff["Interventions"]["PercentReductionInRiskWithAdditionalModerateExercise"] + "<br />";
+                remainingText += "PercentReductionInRiskWithAdditionalVigorousExercise: " + jsonStuff["Interventions"]["PercentReductionInRiskWithAdditionalVigorousExercise"] + "<br />";
+                remainingText += "PercentReductionInRiskWithWeightLoss: " + jsonStuff["Interventions"]["PercentReductionInRiskWithWeightLoss"] + "<br />";
+                remainingText += "PoundsOfWeightLossRequired: " + jsonStuff["Interventions"]["PoundsOfWeightLossRequired"] + "<br />";
+                remainingText += "PercentReductionWithSmokingCessation: " + jsonStuff["Interventions"]["PercentReductionWithSmokingCessation"] + "<br />";
+                remainingText += "PercentReductionWithAllInterventions: " + jsonStuff["Interventions"]["PercentReductionWithAllInterventions"] + "<br />";
+                remainingText += "<br />";
+                remainingText += "Elevated Blood Pressure: " + jsonStuff["ElevatedBloodPressure"] + "<br />";
+                remainingText += "Elevated Cholesterol: " + jsonStuff["ElevatedCholesterol"] + "<br />";
+                remainingText += "Warning Code: " + jsonStuff["WarningCode"] + "<br />";
+                remainingText += "Recommendation: " + jsonStuff["Recommendation"] + "<br />";
+                remainingText += "DoctorRecommendation: " + jsonStuff["DoctorRecommendation"] + "<br />";
+                return remainingText;
+            }
+            function goto_page2(){
+                $('#page1').hide();
+                $('#page2').show();
+                $('#hba1c_input').hide()
+            }
+            function goto_page3(){
+                $('#page2').hide();
+                $('#page3').show();
+            }
+            //in one of these functions, conditionally add the Hba1c field, if diabetes==True
+            function goto_page4(){
+                $('#page3').hide();
+                $('#page4').show();
+            }
+            function goto_page5(){
+                $('#page4').hide();
+                $('#optional_info').show();
+
+            }
+            function add_hba1c(){
+                $('diabetes_info').append("")
+            }
+                    //<input id="next_button1" type="submit" value="Next" onclick="function(){$('#page1').hide();$('#page2').show();} ;">
+        </script>
+    </head>
+    <body>
+        <h1>How can you be more healthy?</h1>
+        <div id="displaycriteria">
+            <div>
+                <div id="page1">
+                    Age
+                    <input name="age" type="text" value="40"><br>
+                    Gender
+                    <input name="gender" type="text" value="M"><br>
+                    Height
+                    <input name="height" type="text" value="70"><br>
+                    Weight
+                    <input name="weight" type="text" value="160"><br>
+                    <input id="next_button1" type="submit" value="Next" onclick="goto_page2() ;">
+            </div>
+
+                <div id ="page2">
+                    Do you currently smoke?
+                    <input name="smoker" id="smoker_true" type="radio" value="T" >
+                    <label for="smoker_true">Yes</label>
+                    <input name="smoker" id="smoker_false" type="radio" value="F" checked="checked">
+                    <label for="smoker_false">No</label><br>
+
+                    <label>Have you ever had a heart attack?</label>
+                    <input name="mi" id="mi_true" type="radio" value="T" >
+                    <label for="mi_true">Yes</label>
+                    <input name="mi" id="mi_false" type="radio" value="F" checked="checked">
+                    <label for="mi_false">No</label><br>
+
+                    <label>Have you ever had a stroke?</label>
+                    <input name="stroke" id="stroke_true" type="radio" value="T" >
+                    <label for="stroke_true">Yes</label>
+                    <input name="stroke" id="stroke_false" type="radio" value="F" checked="checked">
+                    <label for="stroke_false">No</label><br>
+
+                    <div id="diabetes_info">
+                    <label>Do you have diabetes?</label>
+                    <input name="diabetes" id="diabetes_true" type="radio" value="T" onclick="$('#hba1c_input').show()" >
+                    <label for="diabetes_true">Yes</label>
+                    <input name="diabetes" id="diabetes_false" type="radio" value="F" checked="checked" onclick="$('#hba1c_input').hide()" >
+                    <label for="diabetes_false">No</label><br>
+                    <div id="hba1c_input">
+                    <label>HbA1c</label>
+                    <input name='hba1c' type='text'>
+                    </div>
+                    </div>
+
+                    <input id="next_button2" type="submit" value="Next" onclick="goto_page3() ;">
+                </div>
+            </div>
+            <div id="page3">
+                <h2>Blood Pressure</h2>
+                If you know your last test result or average of recent test results please enter it below:<br>
+                Systolic<input name="systolic" type="text"><br>
+                Diastolic<input name="diastolic" type="text"><br>
+                <input id="next_button3" type="submit" value="Next" onclick="goto_page4() ;">
+            </div>
+            <div id="page4">
+                If you know your last test result or average of recent test results please enter it below. If you don't know these values you can still click next to continue, but we strongly encourage you to get tested and find out these numbers<br>
+                Cholesterol<input name="cholesterol" type="text"><br>
+                HDL<input name="hdl" type="text"><br>
+                LDL<input name="ldl" type="text"><br>
+                <input id="next_button4" type="submit" value="Next" onclick="goto_page5() ;">
+            </div>
+            <div id="optional_info">
+                <h2>Please answer the questions below to maximize the accuracy of this assessment, otherwise you may click next without answering to receive a slightly less accurate assessment</h2>
+                Do you take medication to lower your cholesterol?<input name="cholesterolmeds" type="text">
+                Do you take medication for your blood pressure?<input name="bloodpressuremeds" type="text"><br>
+                How many different blood pressure medications do you take?<input name="bloodpressuremedcount" type="text">
+                Do you take aspirin regularly?<input name="aspirin" type="text"><br>
+                How many hours do you spend doing moderate physical activities such as walking in a typical week?<input name="moderateexercise" type="text"><br>
+                How many hours do you spend doing vigorous physical activities such as running in a typical week?<input name="vigorousexercise" type="text"><br>
+                Has an immediate relative of yours (parent, brother or sister) had a heart attack before the age of 55?<input name="familymihistory" type="text"><br>
+                <input id="submit_button" type="submit" onclick="submitStuff();">
+            </div>
+        </div>
+        <div id="displayresults">
+        </div>
+        <table id="risktable" style="display: none;">
+            <tbody><tr>
+                <td id="td0" width="33%">
+                </td>
+                <td id="td1" width="33%">
+                </td>
+                <td id="td2" width="33%">
+                </td>
+            </tr>
+        </tbody></table>
+        <div id="riskresults" style="display: none;">
+            <div>
+                Risk Type: <span id="riskType"></span>
+                <br>
+                Risk %: <span id="risk"></span>
+                <br>
+                Risk Percentile: <span id="riskPercentile"></span>
+                <br>
+                Comparison Risk %: <span id="comparisonRisk"></span>
+                <br>
+                Rating for Age: <span id="ratingForAge"></span>
+                <br>
+                Absolute Rating: <span id="rating"></span>
+                <br>
+            </div>
+        </div>
+<div id="map" style="width: 500px; height: 400px;"></div>
+
+  <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+  <script type="text/javascript">
+      //test of geocoding addresses
+      var address; 
+  var map = new google.maps.Geocoder();
+  var map_center_lat=0;
+  var map_center_lng=0;
+  //html5 location api:
+function geocode(){
+    map.geocode({'address' : address }, function(results, status){
+            map_center_lat = results[0].geometry.location.lat();
+            map_center_lng = results[0].geometry.location.lng();
+            console.log("map_center_lat " +map_center_lat);
+            });
+}
+
+function reverse_geocode(lat,lng){
+    var latlng = new google.maps.LatLng(lat,lng);
+    map.geocode({'latLng' : latlng }, function(results, status){
+            if(status ==google.maps.GeocoderStatus.OK){
+                if(results[0]){
+                console.log("reverse geocoding");
+                console.log(results[0].formatted_address);
+                address=results[0].formatted_address;
+                }
+            }
+            });
+}
+
+  navigator.geolocation.getCurrentPosition(function(d){
+          console.log('in navigator')
+          map_center_lat = d['coords']['latitude']
+          map_center_lng = d['coords']['longitude']
+          console.log(d);
+          reverse_geocode(map_center_lat,map_center_lng);
+          });
+
+
+
+    function drawMap(){
+      //center: new google.maps.LatLng(-33.92, 151.25),
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 2,
+      center: new google.maps.LatLng(map_center_lat, map_center_lng),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+    console.log("in drawMap");
+    console.log(locations);
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+ }
+
+function find_test_centers(lat,lon,radius,maxResults)
+            {
+                //build query string here
+                var querystring="?apikey=3a0a572b-4f5d-47a2-9a75-819888576454&lat="+lat+"&lon="+lon+"&radius="+radius+"&maxResults="+maxResults;
+
+                $.ajax({
+                        crossDomain:false,
+                        type:'get',
+                        url:'http://localhost:8000/find_test_centers'+querystring,
+                     success: function (results)
+                    {
+                    console.log(results)
+
+          locations.push(["hi",map_center_lat,map_center_lng])
+                    $.each(results['providers'],function(index,obj){
+                        var directions_link = 'Click <a href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>here </a> for driving directions to:<br> '+obj['address1']
+                        locations.push([directions_link,obj['lat'],obj['lon']])
+                        });
+
+                    drawMap();
+                    }});
+            }
+
+
+console.log("map_center_lat " +map_center_lat);
+console.log("map_center_lng " +map_center_lng);
+//--end of geocoding----------
+
+</script>
+
+        <!--
+        response.Interventions = new Interventions(value, value, value, value, value, value, value, value, value, value, value); 
+        response.ElevatedBloodPressure = true; 
+        response.ElevatedCholesterol = true; 
+        response.Recommendation = "Live healthier";-->
+    
+
+</body></html>
