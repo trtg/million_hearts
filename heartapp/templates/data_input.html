@@ -21,13 +21,15 @@ var locations = [ ];
                 $("#diabetes_only").hide()
             });
 
-            
+//explicitly specify expected return dataType in $.ajax
+//call to avoid differing behavior between chrome and firefox
             function submitStuff()
             {
                 $.ajax({
                     crossDomain: true,
                     type: 'post',
                     url: 'https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health',
+                    dataType:'json',
                     data: collectData(),
                     success: function (results)
                     {
@@ -348,27 +350,30 @@ function reverse_geocode(lat,lng){
     }
  }
 
+//explicitly specify expected return dataType in $.ajax
+//call to avoid differing behavior between chrome and firefox
 function find_test_centers(lat,lon,radius,maxResults)
             {
                 //build query string here
                 var querystring="?apikey=3a0a572b-4f5d-47a2-9a75-819888576454&lat="+lat+"&lon="+lon+"&radius="+radius+"&maxResults="+maxResults;
 
                 $.ajax({
-                        crossDomain:false,
+                        crossDomain:true,
+                        dataType:'json',
                         type:'get',
                         url:'http://localhost:8000/find_test_centers'+querystring,
                      success: function (results)
-                    {
-                    console.log(results)
+                     {
+                     console.log(results)
 
-          locations.push(["hi",map_center_lat,map_center_lng])
-                    $.each(results['providers'],function(index,obj){
-                        var directions_link = 'Click <a href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>here </a> for driving directions to:<br> '+obj['address1']
-                        locations.push([directions_link,obj['lat'],obj['lon']])
-                        });
+                     locations.push(["hi",map_center_lat,map_center_lng])
+                     $.each(results['providers'],function(index,obj){
+                         var directions_link = 'Click <a href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>here </a> for driving directions to:<br> '+obj['address1']
+                         locations.push([directions_link,obj['lat'],obj['lon']])
+                         });
 
-                    drawMap();
-                    }});
+                     drawMap();
+                     }});
             }
 
 
