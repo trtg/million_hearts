@@ -361,7 +361,7 @@ function find_test_centers(lat,lon,radius,maxResults)
                         crossDomain:true,
                         dataType:'json',
                         type:'get',
-                        url:'http://localhost:8000/find_test_centers'+querystring,
+                        url: location.href+'find_test_centers'+querystring,
                      success: function (results)
                      {
                      console.log(results)
