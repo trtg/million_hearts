@@ -74,7 +74,7 @@
 
                             <div class="control-group">
                                 <label class="control-label" >Gender</label>
-                                <div class="controls">
+                                <div class="controls btn-group">
                                     <label class="radio">
                                         <input type="radio" name="gender" id="genderMale" value="M" checked>
                                         Male
@@ -185,7 +185,6 @@
 
                     <!--FIXME add tooltips for definitions of systolic, diastolic, hba1c,etc.-->
                     <div class="tab-pane" id="tab3">
-                        <div class="well">The items in this section are optional, if you know these values, however, please enter them to get the most accurate risk assessment possible. If you do not know these values, we strongly encourage you to get tested and find out. In section 4 we'll give you the chance to look for the closest testing center to you.</div>
                         <div class="form-horizontal">
                             <div class="control-group">
                                 <label class="control-label" for="inputSystolic">Systolic</label>
@@ -364,6 +363,7 @@
                     $("#tab2_link a").click(function(e){ e.preventDefault() });
                     $("#tab3_link a").click(function(e){ e.preventDefault() });
                     $("#tab4_link a").click(function(e){ e.preventDefault() });
+                    $("#popover").popover();
 
                     });
                 </script>
