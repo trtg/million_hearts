@@ -1,135 +1,374 @@
-<!DOCTYPE html> 
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Heart Risk Calculator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-        <title>Heart Risk Assessment</title>
-        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
-        <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <!-- Le styles -->
+        <link href="static/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
+        <link href="static/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="ico/favicon.ico">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
     </head>
+
     <body>
-        <h1>How can you be more healthy?</h1>
-        <div id="displaycriteria">
-            <div id="page1">
-                Age
-                <input name="age" type="text" value="40"><br>
-                Gender
-                <input name="gender" type="text" value="M"><br>
-                Height
-                <input name="height" type="text" value="70"><br>
-                Weight
-                <input name="weight" type="text" value="160"><br>
-                <input id="next_button1" type="submit" value="Next" onclick="goto_page2() ;">
-            </div>
 
-            <div id ="page2">
-                Do you currently smoke?
-                <input name="smoker" id="smoker_true" type="radio" value="T" >
-                <label for="smoker_true">Yes</label>
-                <input name="smoker" id="smoker_false" type="radio" value="F" checked="checked">
-                <label for="smoker_false">No</label><br>
-
-                <label>Have you ever had a heart attack?</label>
-                <input name="mi" id="mi_true" type="radio" value="T" >
-                <label for="mi_true">Yes</label>
-                <input name="mi" id="mi_false" type="radio" value="F" checked="checked">
-                <label for="mi_false">No</label><br>
-
-                <label>Have you ever had a stroke?</label>
-                <input name="stroke" id="stroke_true" type="radio" value="T" >
-                <label for="stroke_true">Yes</label>
-                <input name="stroke" id="stroke_false" type="radio" value="F" checked="checked">
-                <label for="stroke_false">No</label><br>
-
-                <div id="diabetes_info">
-                    <label>Do you have diabetes?</label>
-                    <input name="diabetes" id="diabetes_true" type="radio" value="T" onclick="$('#hba1c_input').show()" >
-                    <label for="diabetes_true">Yes</label>
-                    <input name="diabetes" id="diabetes_false" type="radio" value="F" checked="checked" onclick="$('#hba1c_input').hide()" >
-                    <label for="diabetes_false">No</label><br>
-                    <div id="hba1c_input">
-                        <label>HbA1c</label>
-                        <input name='hba1c' type='text'>
-                    </div>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#"><i class="icon-heart icon-white"></i>Heart Risk Calculator</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
                 </div>
-
-                <input id="next_button2" type="submit" value="Next" onclick="goto_page3() ;">
-            </div>
-
-            <div id="page3">
-                <h2>Blood Pressure</h2>
-                If you know your last test result or average of recent test results please enter it below:<br>
-                Systolic<input name="systolic" type="text"><br>
-                Diastolic<input name="diastolic" type="text"><br>
-                <input id="next_button3" type="submit" value="Next" onclick="goto_page4() ;">
-            </div>
-            <div id="page4">
-                If you know your last test result or average of recent test results please enter it below. If you don't know these values you can still click next to continue, but we strongly encourage you to get tested and find out these numbers<br>
-                Cholesterol<input name="cholesterol" type="text"><br>
-                HDL<input name="hdl" type="text"><br>
-                LDL<input name="ldl" type="text"><br>
-                <input id="next_button4" type="submit" value="Next" onclick="goto_page5() ;">
-            </div>
-            <div id="optional_info">
-                <h2>Please answer the questions below to maximize the accuracy of this assessment, otherwise you may click next without answering to receive a slightly less accurate assessment</h2>
-                Do you take medication to lower your cholesterol?<input name="cholesterolmeds" type="text">
-                Do you take medication for your blood pressure?<input name="bloodpressuremeds" type="text"><br>
-                How many different blood pressure medications do you take?<input name="bloodpressuremedcount" type="text">
-                Do you take aspirin regularly?<input name="aspirin" type="text"><br>
-                How many hours do you spend doing moderate physical activities such as walking in a typical week?<input name="moderateexercise" type="text"><br>
-                How many hours do you spend doing vigorous physical activities such as running in a typical week?<input name="vigorousexercise" type="text"><br>
-                Has an immediate relative of yours (parent, brother or sister) had a heart attack before the age of 55?<input name="familymihistory" type="text"><br>
-                <input id="submit_button" type="submit" onclick="submitStuff();">
             </div>
         </div>
-        <div id="displayresults">
-        </div>
-        <table id="risktable" style="display: none;">
-            <tbody><tr>
-                    <td id="td0" width="33%">
-                    </td>
-                    <td id="td1" width="33%">
-                    </td>
-                    <td id="td2" width="33%">
-                    </td>
-                </tr>
-        </tbody></table>
-        <div id="riskresults" style="display: none;">
-            <div>
-                Risk Type: <span id="riskType"></span>
-                <br>
-                Risk %: <span id="risk"></span>
-                <br>
-                Risk Percentile: <span id="riskPercentile"></span>
-                <br>
-                Comparison Risk %: <span id="comparisonRisk"></span>
-                <br>
-                Rating for Age: <span id="ratingForAge"></span>
-                <br>
-                Absolute Rating: <span id="rating"></span>
-                <br>
-            </div>
-        </div>
-        <div id="map" style="width: 500px; height: 400px;"></div>
-        <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-        <!--google maps and test center locating functionality-->
-        <script src="static/js/surescripts.js" type="text/javascript"></script>
-        <script src="static/js/nav_logic.js" type="text/javascript"></script>
-        <script language="javascript" type="text/javascript">
-            var address; 
-            var map = new google.maps.Geocoder();
-            var map_center_lat=0;
-            var map_center_lng=0;
-            var locations = [ ];
-$(document).ready(function ()
-        {
-        //move event handlers to here rather than using onclick attribute inline
-        $("#riskresults").hide();
-        $("#risktable").hide();
-        $("#page2").hide();
-        $("#page3").hide()
-        $("#page4").hide()
-        $("#optional_info").hide()
-        $("#diabetes_only").hide()
-        });
 
-</script>
-</body></html>
+        <div class="container">
+
+            <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+
+            <div class="tabbable"> <!-- Only required for left/right tabs -->
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Section 1</a></li>
+                    <!--we add data-toggle attribute for subsequent tabs in event handler for next button
+                    after verifying that all data in current tab has been entered-->
+                    <li class="disabled" id="tab2_link"><a href="#tab2" >Section 2</a></li>
+                    <li class="disabled" id="tab3_link"><a href="#tab3" >Section 3</a></li>
+                    <li class="disabled" id="tab4_link"><a href="#tab4" >Section 4</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <div class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="inputAge">Age</label>
+                                <div class="controls">
+                                    <input type="text" name="age" id="inputAge" placeholder="Please enter your age" value="40">
+                                </div>
+                            </div><!--end control-group for Age-->
+
+                            <div class="control-group">
+                                <label class="control-label" >Gender</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="gender" id="genderMale" value="M" checked>
+                                        Male
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="gender" id="genderFemale" value="F">
+                                        Female
+                                    </label>
+                                </div>
+                            </div><!--end control-group for Gender-->
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputHeight">Height(inches)</label>
+                                <div class="controls">
+                                    <input type="text" id="inputHeight" name="height" placeholder="Please enter your height" value="70">
+                                </div>
+                            </div><!--end control-group for Height-->
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputWeight">Weight(lbs)</label>
+                                <div class="controls">
+                                    <input type="text" id="inputWeight" name="weight" placeholder="Please enter your weight" value="160">
+                                </div>
+                            </div><!--end control-group for Weight-->
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button id="button_to_prior_history" type="submit" class="btn">Next</button>
+                                </div>
+                            </div><!--end of control-group for button-->
+                        </div><!--end form-horizontal-->
+                    </div><!--end tab1-->
+
+
+                    <div class="tab-pane" id="tab2">
+                        <div class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" >Do you currently smoke?</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="smoker" id="smoker_true" value="T" >
+                                        Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="smoker" id="smoker_false" value="F" checked>
+                                        No
+                                    </label>
+                                </div>
+                            </div><!--end control-group for smoker-->
+
+                            <div class="control-group">
+                                <label class="control-label" >Have you ever had a heart attack?</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="mi" id="mi_true" value="T" >
+                                        Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="mi" id="mi_false" value="F" checked>
+                                        No
+                                    </label>
+                                </div>
+                            </div><!--end control-group for heart attack-->
+
+                            <div class="control-group">
+                                <label class="control-label" >Have you ever had a stroke?</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="stroke" id="stroke_true" value="T" >
+                                        Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="stroke" id="stroke_false" value="F" checked>
+                                        No
+                                    </label>
+                                </div>
+                            </div><!--end control-group for stroke-->
+
+                            <div class="control-group">
+                                <label class="control-label" >Do you have diabetes?</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="diabetes" id="diabetes_true" value="T" >
+                                        Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="diabetes" id="diabetes_false" value="F" checked>
+                                        No
+                                    </label>
+                                </div>
+                            </div><!--end control-group for diabetes-->
+
+                            <!--alternatively move hba1c to the next tab with other test results-->
+                            <div class="control-group" id="hba1c_group">
+                                <label class="control-label" for="inputHba1c">HbA1c</label>
+                                <div class="controls">
+                                    <input type="text" id="inputHba1c" name="hba1c" placeholder="Please enter your HbA1c(%)">
+                                </div>
+                            </div><!--end control-group for hba1c-->
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button id="button_to_blood_tests" type="submit" class="btn">Next</button>
+                                </div>
+                            </div><!--end of control-group for button-->
+                        </div><!--end form-horizontal-->
+                    </div><!--end tab2-->
+
+                    <!--FIXME add tooltips for definitions of systolic, diastolic, hba1c,etc.-->
+                    <div class="tab-pane" id="tab3">
+                        <div class="well">The items in this section are optional, if you know these values, however, please enter them to get the most accurate risk assessment possible. If you do not know these values, we strongly encourage you to get tested and find out. In section 4 we'll give you the chance to look for the closest testing center to you.</div>
+                        <div class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="inputSystolic">Systolic</label>
+                                <div class="controls">
+                                    <input type="text" id="inputSystolic" name="systolic" placeholder="Enter your systolic BP(mmHg)">
+                                </div>
+                            </div><!--end control-group for systolic-->
+                            <div class="control-group">
+                                <label class="control-label" for="inputDiastolic">Diastolic</label>
+                                <div class="controls">
+                                    <input type="text" id="inputDiastolic" name="diastolic" placeholder="Enter your diastolic BP(mmHg)">
+                                </div>
+                            </div><!--end control-group for diastolic-->
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputCholesterol">Cholesterol</label>
+                                <div class="controls">
+                                    <input type="text" id="inputCholesterol" name="cholesterol" placeholder="Enter your cholesterol">
+                                </div>
+                            </div><!--end control-group for cholesterol-->
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputHdl">HDL</label>
+                                <div class="controls">
+                                    <input type="text" id="inputHdl" name="hdl" placeholder="Enter your HDL">
+                                </div>
+                            </div><!--end control-group for hdl-->
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputLdl">LDL</label>
+                                <div class="controls">
+                                    <input type="text" id="inputLdl" name="ldl" placeholder="Enter your LDL">
+                                </div>
+                            </div><!--end control-group for ldl-->
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button id="button_to_optional_info" type="submit" class="btn">Next</button>
+                                </div>
+                            </div><!--end of control-group for button-->
+
+
+                        </div><!--end form-horizontal-->
+                    </div><!--end tab3-->
+
+                    <div class="tab-pane" id="tab4">
+                        <div class="form-horizontal">
+
+                            <div class="control-group">
+                                <label class="control-label" >Do you take medication to lower your cholesterol?</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="cholesterolmeds" id="cholesterol_meds_true" value="T" >
+                                        Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="cholesterolmeds" id="cholesterol_meds_false" value="F" checked>
+                                        No
+                                    </label>
+                                </div>
+                            </div><!--end control-group for cholesterolmeds-->
+
+                            <div class="control-group">
+                                <label class="control-label" >Do you take medication for your blood pressure?</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="bloodpressuremeds" id="bloodpressure_meds_true" value="T" >
+                                        Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="bloodpressuremeds" id="bloodpressure_meds_false" value="F" checked>
+                                        No
+                                    </label>
+                                </div>
+                            </div><!--end control-group for bloodpressuremeds-->
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputBloodpressuremedcount">How many different blood pressure medications do you take?</label>
+                                <div class="controls">
+                                    <input type="text" id="inputBloodpressuremedcount" name="bloodpressuremedcount" placeholder="Enter how many">
+                                </div>
+                            </div><!--end control-group for bloodpressuremedcount-->
+
+
+                            <div class="control-group">
+                                <label class="control-label" >Do you take aspirin regularly?</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="aspirin" id="aspirin_true" value="T" >
+                                        Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="aspirin" id="aspirin_false" value="F" checked>
+                                        No
+                                    </label>
+                                </div>
+                            </div><!--end control-group for aspirin-->
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputModerateExercise">How many hours do you spend doing moderate physical activities such as walking in a typical week?</label>
+                                <div class="controls">
+                                    <input type="text" id="inputModerateExercise" name="moderateexercise" placeholder="Enter how many">
+                                </div>
+                            </div><!--end control-group for moderateexercise-->
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputVigorousExercise">How many hours do you spend doing vigorous physical activities such as running in a typical week?</label>
+                                <div class="controls">
+                                    <input type="text" id="inputVigorousExercise" name="vigorousexercise" placeholder="Enter how many">
+                                </div>
+                            </div><!--end control-group for vigorousexercise-->
+
+
+                            <div class="control-group">
+                                <label class="control-label" >Has an immediate relative of yours(parent,brother or sister) had a heart attack before the age of 55?</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="familyhistory" id="familyhistory_true" value="T" >
+                                        Yes
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="familyhistory" id="familyhistory_false" value="F" checked>
+                                        No
+                                    </label>
+                                </div>
+                            </div><!--end control-group for familyhistory-->
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button id="button_submit" type="submit" class="btn">Compute my risk</button>
+                                </div>
+                            </div><!--end of control-group for button-->
+
+
+
+                        </div><!--end form-horizontal-->
+                    </div><!--end tab4-->
+
+
+                </div><!--end tab-content-->
+            </div><!--end tabbable-->
+
+
+        </div> <!-- /container -->
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="static/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                    $("#button_to_prior_history").click(function(e){
+                        $('#myTab li:eq(1) a').tab('show');
+                        $("#tab2_link").removeClass("disabled");
+                        $("#tab2_link a").attr('data-toggle','tab');
+                        });
+
+                    $("#button_to_blood_tests").click(function(e){
+                        $('#myTab li:eq(2) a').tab('show');
+                        $("#tab3_link").removeClass("disabled");
+                        $("#tab3_link a").attr('data-toggle','tab');
+                        });
+
+                    $("#button_to_optional_info").click(function(e){
+                        $('#myTab li:eq(3) a').tab('show');
+                        $("#tab4_link").removeClass("disabled");
+                        $("#tab4_link a").attr('data-toggle','tab');
+                        });
+
+                    $("#hba1c_group").hide();
+                    $("#diabetes_true").click(function(){ $("#hba1c_group").show(); });
+                    $("#diabetes_false").click(function(){ $("#hba1c_group").hide(); });
+
+                    //keep the non-active tabs from being clickable at first, since we haven't entered the data yet
+                    $("#tab2_link a").click(function(e){ e.preventDefault() });
+                    $("#tab3_link a").click(function(e){ e.preventDefault() });
+                    $("#tab4_link a").click(function(e){ e.preventDefault() });
+
+                    });
+                </script>
+
+            </body>
+        </html>
