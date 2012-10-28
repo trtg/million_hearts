@@ -43,7 +43,7 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">About</a></li>
+                            <li><a href="static/faq.html">FAQ</a></li>
                             <li><a href="#contact">Contact</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
@@ -55,7 +55,8 @@
 
             <div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
                 <ul id="myTab" class="nav nav-tabs">
-                    <li class="active"><a href="#tab1" data-toggle="tab">Step 1</a></li>
+                    <li class="active"><a href="#tabIntro" data-toggle="tab">Intro</a></li>
+                    <li class="disabled" id="tab1_link"><a href="#tab1">Step 1</a></li>
                     <!--we add data-toggle attribute for subsequent tabs in event handler for next button
                     after verifying that all data in current tab has been entered-->
                     <li class="disabled" id="tab2_link"><a href="#tab2" >Step 2</a></li>
@@ -63,7 +64,20 @@
                     <li class="disabled" id="tab4_link"><a href="#tab4" >Step 4</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab1">
+
+                    <div class="tab-pane active" id="tabIntro">
+                        <div class ="well">
+                    Please provide the information requested in the next few steps. The more information you can provide, the better our risk estimate will be. Once we have all your info we will compute your heart risk and give you the chance to find your closest testing center. 
+                        </div>
+
+                        <div class="control-group">
+                                <div class="controls">
+                                    <button id="button_to_step1" type="submit" class="btn">Get started</button>
+                                </div>
+                            </div><!--end of control-group for button-->
+                    </div><!--end tabIntro-->
+
+                    <div class="tab-pane" id="tab1">
                         <div class="form-horizontal">
                             <div class="control-group">
                                 <label class="control-label" for="inputAge">Age</label>
@@ -189,34 +203,34 @@
                             <div class="control-group">
                                 <label class="control-label" for="inputSystolic">Systolic</label>
                                 <div class="controls">
-                                    <input type="text" id="inputSystolic" name="systolic" placeholder="Enter your systolic BP(mmHg)">
+                                    <input type="text" id="inputSystolic" name="systolic" placeholder="Enter systolic BP(mmHg)">
                                 </div>
                             </div><!--end control-group for systolic-->
                             <div class="control-group">
                                 <label class="control-label" for="inputDiastolic">Diastolic</label>
                                 <div class="controls">
-                                    <input type="text" id="inputDiastolic" name="diastolic" placeholder="Enter your diastolic BP(mmHg)">
+                                    <input type="text" id="inputDiastolic" name="diastolic" placeholder="Enter diastolic BP(mmHg)">
                                 </div>
                             </div><!--end control-group for diastolic-->
 
                             <div class="control-group">
                                 <label class="control-label" for="inputCholesterol">Cholesterol</label>
                                 <div class="controls">
-                                    <input type="text" id="inputCholesterol" name="cholesterol" placeholder="Enter your cholesterol">
+                                    <input type="text" id="inputCholesterol" name="cholesterol" placeholder="Enter cholesterol">
                                 </div>
                             </div><!--end control-group for cholesterol-->
 
                             <div class="control-group">
                                 <label class="control-label" for="inputHdl">HDL</label>
                                 <div class="controls">
-                                    <input type="text" id="inputHdl" name="hdl" placeholder="Enter your HDL">
+                                    <input type="text" id="inputHdl" name="hdl" placeholder="Enter HDL">
                                 </div>
                             </div><!--end control-group for hdl-->
 
                             <div class="control-group">
                                 <label class="control-label" for="inputLdl">LDL</label>
                                 <div class="controls">
-                                    <input type="text" id="inputLdl" name="ldl" placeholder="Enter your LDL">
+                                    <input type="text" id="inputLdl" name="ldl" placeholder="Enter LDL">
                                 </div>
                             </div><!--end control-group for ldl-->
 
@@ -337,20 +351,26 @@
         <script src="static/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
-                    $("#button_to_prior_history").click(function(e){
+                    $("#button_to_step1").click(function(e){
                         $('#myTab li:eq(1) a').tab('show');
+                        $("#tab1_link").removeClass("disabled");
+                        $("#tab1_link a").attr('data-toggle','tab');
+                        });
+
+                    $("#button_to_prior_history").click(function(e){
+                        $('#myTab li:eq(2) a').tab('show');
                         $("#tab2_link").removeClass("disabled");
                         $("#tab2_link a").attr('data-toggle','tab');
                         });
 
                     $("#button_to_blood_tests").click(function(e){
-                        $('#myTab li:eq(2) a').tab('show');
+                        $('#myTab li:eq(3) a').tab('show');
                         $("#tab3_link").removeClass("disabled");
                         $("#tab3_link a").attr('data-toggle','tab');
                         });
 
                     $("#button_to_optional_info").click(function(e){
-                        $('#myTab li:eq(3) a').tab('show');
+                        $('#myTab li:eq(4) a').tab('show');
                         $("#tab4_link").removeClass("disabled");
                         $("#tab4_link a").attr('data-toggle','tab');
                         });
@@ -360,6 +380,7 @@
                     $("#diabetes_false").click(function(){ $("#hba1c_group").hide(); });
 
                     //keep the non-active tabs from being clickable at first, since we haven't entered the data yet
+                    $("#tab1_link a").click(function(e){ e.preventDefault() });
                     $("#tab2_link a").click(function(e){ e.preventDefault() });
                     $("#tab3_link a").click(function(e){ e.preventDefault() });
                     $("#tab4_link a").click(function(e){ e.preventDefault() });
