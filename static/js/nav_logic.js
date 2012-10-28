@@ -18,9 +18,12 @@ function submitStuff()
     }
     });
     //surescripts API currently only returns data near minneapolis
-    find_test_centers(44.979965,-93.263836,2,10)
 }
 
+function showTestingCenters()
+{
+    find_test_centers(44.979965,-93.263836,2,10)
+}
 
 
 function collectData()

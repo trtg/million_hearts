@@ -354,8 +354,9 @@
                     </div><!--end tabRisk-->
 
                     <div class="tab-pane" id="tabTesting">
-                        <table class="table table-bordered table-condensed" id ="riskTable">
+                        <table class="table table-bordered table-condensed table-striped" id ="pharmacyTable">
                             <tbody>
+                                <tr></tr>
                                 </tbody>
                         </table>
                     </div><!--end tabTesting-->
@@ -423,6 +424,7 @@
                         $('#myTab li:eq(6) a').tab('show');
                         $("#tabTesting_link").removeClass("disabled");
                         $("#tabTesting_link a").attr('data-toggle','tab');
+                        showTestingCenters();
                         });
 
                     $("#hba1c_group").hide();
