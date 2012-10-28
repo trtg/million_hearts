@@ -12,7 +12,8 @@ function submitStuff()
     {
         //alert(results);
         //jsonResults = jQuery.parseJSON(results);
-        displayData(results);
+        //displayData(results);
+        drawResultTable(results);
         console.log(results)
     }
     });
@@ -34,6 +35,17 @@ function collectData()
     console.log(allInputs);
     return allInputs;
 }
+
+function drawResultTable(jsonData)
+{
+    console.log("in drawResultTable");
+    console.log('rating is ' +jsonData['Risk'][1]['rating']);
+    $('#riskTable tbody').html('<tr><td>Rating </td><td>'+jsonData['Risk'][1]['rating']+"</td></tr>");
+    $('#riskTable tr:last').after('<tr class="error"><td>Percentile </td><td>'+jsonData['Risk'][1]['riskPercentile']+"</td></tr>");
+    $('#riskTable tr:last').after('<tr class="success"><td>Rating for age </td><td>'+jsonData['Risk'][1]['ratingForAge']+"</td></tr>");
+    $('#riskTable tr:last').after('<tr><td>Comparison risk </td><td>'+jsonData['Risk'][1]['comparisonRisk']+"</td></tr>");
+}
+
 
 function displayData(jsonStuff)
 {

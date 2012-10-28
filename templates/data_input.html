@@ -63,6 +63,7 @@
                     <li class="disabled" id="tab3_link"><a href="#tab3" >Step 3</a></li>
                     <li class="disabled" id="tab4_link"><a href="#tab4" >Step 4</a></li>
                     <li class="disabled" id="tabRisk_link"><a href="#tabRisk" >Your Risk</a></li>
+                    <li class="disabled" id="tabRisk_testing"><a href="#tabTesting" >Get tested</a></li>
                 </ul>
                 <div class="tab-content">
 
@@ -340,8 +341,10 @@
 
 
                     <div class="tab-pane" id="tabRisk">
-                        <div id ="riskResults">
-                        </div>
+                        <table class="table table-bordered table-condensed" id ="riskTable">
+                            <tbody>
+                                </tbody>
+                        </table>
 
                         <div class="control-group">
                                 <div class="controls">
@@ -409,6 +412,7 @@
                         $('#myTab li:eq(5) a').tab('show');
                         $("#tabRisk_link").removeClass("disabled");
                         $("#tabRisk_link a").attr('data-toggle','tab');
+                        submitStuff();
                         });
 
                     $("#hba1c_group").hide();
