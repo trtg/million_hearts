@@ -80,7 +80,7 @@ function find_test_centers(lat,lon,radius,maxResults)
                          
                          var short_directions = '<a href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>'+obj['address1'] +'</a>'
 
-                         $('#pharmacyTable tr:last').after('<tr><td>'+short_directions+'</td><td>'+obj['distance']+"</td></tr>");
+                         $('#pharmacyTable tr:last').after('<tr><td>'+short_directions+'</td><td>'+obj['distance'].toFixed(1)+"</td></tr>");
                          });
 
                      drawMap();
