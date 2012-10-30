@@ -20,6 +20,7 @@ function reverse_geocode(lat,lng){
             });
 }
 
+function get_device_location(){
   navigator.geolocation.getCurrentPosition(function(d){
           console.log('in navigator')
           map_center_lat = d['coords']['latitude']
@@ -27,7 +28,7 @@ function reverse_geocode(lat,lng){
           console.log(d);
           reverse_geocode(map_center_lat,map_center_lng);
           });
-
+}
 
     function drawMap(){
       //center: new google.maps.LatLng(-33.92, 151.25),

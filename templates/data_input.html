@@ -354,12 +354,27 @@
                     </div><!--end tabRisk-->
 
                     <div class="tab-pane" id="tabTesting">
+                        <div class="control-group">
+                                <label class="control-label" for="inputMyAddress">Address:</label>
+                                <div class="controls">
+                                    <input type="text" id="inputMyAddress" name="myAddress" placeholder="Your Address">
+                                </div>
+                            </div><!--end control-group for inputMyAddress-->
+
+
+                        <div class="control-group">
+                            <div class="controls">
+                                    <button id="button_to_html5_geolocate" type="submit" class="btn">Use my location to find a test center</button>
+                                </div>
+                            </div>
+                        <div id="testingResults">
                         Click any address below for directions.
                         <table class="table table-bordered table-condensed table-striped" id ="pharmacyTable">
                             <tbody>
                                 <tr><th>Address</th><th>Distance</th></tr>
                                 </tbody>
                         </table>
+                    </div><!--end testingResults-->
                     </div><!--end tabTesting-->
 
 
@@ -425,6 +440,7 @@
                         $('#myTab li:eq(6) a').tab('show');
                         $("#tabTesting_link").removeClass("disabled");
                         $("#tabTesting_link a").attr('data-toggle','tab');
+                        get_device_location();//maybe add a separate button to call this
                         showTestingCenters();
                         });
 
