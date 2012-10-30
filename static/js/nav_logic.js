@@ -22,7 +22,8 @@ function submitStuff()
 
 function showTestingCenters()
 {
-    find_test_centers(44.979965,-93.263836,2,10)
+    console.log('called showTestingCenters');
+    //find_test_centers(44.979965,-93.263836,2,10)
 }
 
 
