@@ -28,7 +28,7 @@ function showTestingCenters()
 
 function collectData()
 {
-    var allInputs = $('input')
+    var allInputs = $(':text, :checked')
         .map(function ()
                 {
                     return $(this).attr("name") + "=" + $(this).val()

@@ -77,8 +77,10 @@ function find_test_centers(lat,lon,radius,maxResults)
                      $.each(results['providers'],function(index,obj){
                          var directions_link = 'Click <a href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>here </a> for driving directions to:<br> '+obj['address1']
                          locations.push([directions_link,obj['lat'],obj['lon']])
+                         
+                         var short_directions = '<a href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>'+obj['address1'] +'</a>'
 
-                         $('#pharmacyTable tr:last').after('<tr><td>Address </td><td>'+obj['address1']+"</td></tr>");
+                         $('#pharmacyTable tr:last').after('<tr><td>'+short_directions+'</td><td>'+obj['distance']+"</td></tr>");
                          });
 
                      drawMap();
