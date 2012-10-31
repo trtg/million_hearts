@@ -128,7 +128,7 @@
                     <div class="tab-pane" id="tab2">
                         <div class="form-horizontal">
                             <div class="control-group">
-                                <label class="control-label" >Do you currently smoke?</label>
+                                <label class="control-label"><a class='infobox' id='smoking_popover' rel="popover" data-content="Answer yes if you have smoked any cigarettes in the past month">Do you currently smoke?</a></label>
                                 <div class="controls">
                                     <label class="radio">
                                         <input type="radio" name="smoker" id="smoker_true" value="T" >
@@ -142,7 +142,7 @@
                             </div><!--end control-group for smoker-->
 
                             <div class="control-group">
-                                <label class="control-label" >Have you ever had a heart attack?</label>
+                                <label class="control-label" ><a class='infobox' id='mi_popover' rel="popover" data-content="A heart attack is sometimes called a myocardial infarction or MI">Have you ever had a heart attack?</a></label>
                                 <div class="controls">
                                     <label class="radio">
                                         <input type="radio" name="mi" id="mi_true" value="T" >
@@ -409,6 +409,13 @@
             $("#map").css('height',$('#parent').innerHeight-1);
 
             $(document).ready(function(){
+                    //popovers below the corresponding link fits better
+                    //on small screens
+                    $('#smoking_popover').popover({placement:'bottom'});
+                    $('#mi_popover').popover({placement:'bottom'});
+                    $('#systolic_popover').popover({placement:'bottom'});
+                    $('#diastolic_popover').popover({placement:'bottom'});
+
                     //avoid having popovers that are stuck on screen
                     $(':button').click(function(e){
                         $('.infobox').popover('hide');
@@ -432,8 +439,7 @@
                         });
 
                     $("#button_to_blood_tests").click(function(e){
-                        $('#systolic_popover').popover({placement:'bottom'});
-                        $('#diastolic_popover').popover({placement:'bottom'});
+                        
                         $('#tab3_link').removeClass('invisible');
                         $('#myTab li:eq(3) a').tab('show');
                         $("#tab3_link").removeClass("disabled");
