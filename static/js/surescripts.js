@@ -62,6 +62,8 @@ function drawMap(){
       })(marker, i));
     }
  }
+//find_test_centers(44.979965,-93.263836,2,10)//the only area 
+//that currently works is minneapolis
 
 //explicitly specify expected return dataType in $.ajax
 //call to avoid differing behavior between chrome and firefox

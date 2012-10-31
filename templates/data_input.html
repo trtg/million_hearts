@@ -479,17 +479,14 @@
                         $('#myTab li:eq(6) a').tab('show');
                         $("#tabTesting_link").removeClass("disabled");
                         $("#tabTesting_link a").attr('data-toggle','tab');
-                        //showTestingCenters();
                         });
 
                     $("#button_to_html5_geolocate").click(function(e){
                         get_device_location();//maybe add a separate button to call this
-                        //showTestingCenters();
                         });
 
                     $("#button_to_manually_geolocate").click(function(e){
                             geocode($('#inputMyAddress').val());
-                            showTestingCenters();
                         });
 
 
