@@ -1,7 +1,8 @@
 //html5 location api:
-function geocode(address){
-    console.log('geocode called with '+address);
-    map.geocode({'address' : address }, function(results, status){
+function geocode(addr){
+    console.log('geocode called with '+addr);
+    address=addr;
+    map.geocode({'address' : addr }, function(results, status){
             map_center_lat = results[0].geometry.location.lat();
             map_center_lng = results[0].geometry.location.lng();
             console.log("map_center_lat " +map_center_lat);

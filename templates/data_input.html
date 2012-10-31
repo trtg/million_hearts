@@ -203,7 +203,7 @@
                     <div class="tab-pane" id="tab3">
                         <div class="form-horizontal">
                             <div class="control-group">
-                                <label class="control-label" for="inputSystolic"><a class='infobox' id='systolic_popover'  rel="popover" data-content="Systolic blood pressure is the first and higher number in your blood pressure, i.e. the 120 in 120/80">Systolic</a></label>
+                                <label id="systolicLabel" class="control-label" for="inputSystolic"><a class='infobox'  id='systolic_popover'  rel="popover" data-content="Systolic blood pressure is the first and higher number in your blood pressure, i.e. the 120 in 120/80">Systolic</a></label>
                                 <div class="controls">
                                     <input type="text" id="inputSystolic" name="systolic" placeholder="Enter systolic BP(mmHg)">
                                 </div>
@@ -424,7 +424,8 @@
                         });
 
                     $("#button_to_blood_tests").click(function(e){
-                        $('#systolic_popover').popover();
+                        //$('#systolic_popover').popover({trigger:'manual', placement:'bottom'});
+                        $('#systolic_popover').popover({placement:'bottom'});
                         $('#tab3_link').removeClass('invisible');
                         $('#myTab li:eq(3) a').tab('show');
                         $("#tab3_link").removeClass("disabled");
@@ -477,6 +478,7 @@
                     $("#tab4_link a").click(function(e){ e.preventDefault() });
                     $("#tabRisk_link a").click(function(e){ e.preventDefault() });
                     $("#tabTesting_link a").click(function(e){ e.preventDefault() });
+                    $("#systolicLabel").click(function(e){ e.preventDefault() });
                     //$("#popover").popover();
 
                     });
