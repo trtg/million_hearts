@@ -55,15 +55,15 @@
 
             <div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
                 <ul id="myTab" class="nav nav-tabs">
-                    <li class="active" id="tabIntro_link"><a href="#tabIntro" data-toggle="tab">Intro</a></li>
-                    <li class="disabled invisible" id="tab1_link"><a href="#tab1">Step 1</a></li>
+                    <li class="tablink active" id="tabIntro_link"><a href="#tabIntro" data-toggle="tab">Intro</a></li>
+                    <li class="tablink disabled invisible" id="tab1_link"><a href="#tab1">Step 1</a></li>
                     <!--we add data-toggle attribute for subsequent tabs in event handler for next button
                     after verifying that all data in current tab has been entered-->
-                    <li class="disabled invisible" id="tab2_link"><a href="#tab2" >Step 2</a></li>
-                    <li class="disabled invisible" id="tab3_link"><a href="#tab3" >Step 3</a></li>
-                    <li class="disabled invisible" id="tab4_link"><a href="#tab4" >Step 4</a></li>
-                    <li class="disabled invisible" id="tabRisk_link"><a href="#tabRisk" >Your Risk</a></li>
-                    <li class="disabled invisible" id="tabTesting_link"><a href="#tabTesting" >Get tested</a></li>
+                    <li class="tablink disabled invisible" id="tab2_link"><a href="#tab2" >Step 2</a></li>
+                    <li class="tablink disabled invisible" id="tab3_link"><a href="#tab3" >Step 3</a></li>
+                    <li class="tablink disabled invisible" id="tab4_link"><a href="#tab4" >Step 4</a></li>
+                    <li class="tablink disabled invisible" id="tabRisk_link"><a href="#tabRisk" >Your Risk</a></li>
+                    <li class="tablink disabled invisible" id="tabTesting_link"><a href="#tabTesting" >Get tested</a></li>
                 </ul>
                 <div class="tab-content">
 
@@ -209,7 +209,7 @@
                                 </div>
                             </div><!--end control-group for systolic-->
                             <div class="control-group">
-                                <label class="control-label" for="inputDiastolic">Diastolic</label>
+                                <label id="diastolicLabel" class="control-label" for="inputDiastolic"><a class='infobox'  id='diastolic_popover'  rel="popover" data-content="Diastolic blood pressure is the second and lower number in your blood pressure, i.e. the 80 in 120/80">Diastolic</a></label>
                                 <div class="controls">
                                     <input type="text" id="inputDiastolic" name="diastolic" placeholder="Enter diastolic BP(mmHg)">
                                 </div>
@@ -409,6 +409,14 @@
             $("#map").css('height',$('#parent').innerHeight-1);
 
             $(document).ready(function(){
+                    //avoid having popovers that are stuck on screen
+                    $(':button').click(function(e){
+                        $('.infobox').popover('hide');
+                        });
+                    $('.tablink').click(function(e){
+                        $('.infobox').popover('hide');
+                        });
+
                     $("#button_to_step1").click(function(e){
                         $('#tab1_link').removeClass('invisible');
                         $('#myTab li:eq(1) a').tab('show');
@@ -424,8 +432,8 @@
                         });
 
                     $("#button_to_blood_tests").click(function(e){
-                        //$('#systolic_popover').popover({trigger:'manual', placement:'bottom'});
                         $('#systolic_popover').popover({placement:'bottom'});
+                        $('#diastolic_popover').popover({placement:'bottom'});
                         $('#tab3_link').removeClass('invisible');
                         $('#myTab li:eq(3) a').tab('show');
                         $("#tab3_link").removeClass("disabled");
@@ -433,7 +441,6 @@
                         });
 
                     $("#button_to_optional_info").click(function(e){
-                        $('.infobox').popover('hide');
                         $('#tab4_link').removeClass('invisible');
                         $('#myTab li:eq(4) a').tab('show');
                         $("#tab4_link").removeClass("disabled");
@@ -479,6 +486,7 @@
                     $("#tabRisk_link a").click(function(e){ e.preventDefault() });
                     $("#tabTesting_link a").click(function(e){ e.preventDefault() });
                     $("#systolicLabel").click(function(e){ e.preventDefault() });
+                    $("#diastolicLabel").click(function(e){ e.preventDefault() });
                     //$("#popover").popover();
 
                     });
