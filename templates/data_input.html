@@ -341,6 +341,10 @@
 
 
                     <div class="tab-pane" id="tabRisk">
+                        <div id='riskProgress'>
+                            Please wait, computing risk.
+                            <img src='static/img/ajax-loader.gif' alt="Loading...">
+                            </div><!--end riskProgress-->
                         <table class="table table-bordered table-condensed" id ="riskTable">
                             <tbody>
                                 </tbody>
@@ -458,8 +462,17 @@
                         $('#myTab li:eq(5) a').tab('show');
                         $("#tabRisk_link").removeClass("disabled");
                         $("#tabRisk_link a").attr('data-toggle','tab');
+                        //var spinner = new Spinner().spin($('#tabRisk'))
                         submitStuff();
                         });
+
+                    $('#riskProgress').hide()
+                        .ajaxStart(function(){
+                                $(this).show();
+                                })
+                    .ajaxStop(function(){
+                            $(this).hide();
+                            });
 
                     $("#button_to_surescripts").click(function(e){
                         $('#tabTesting_link').removeClass('invisible');
@@ -499,6 +512,7 @@
                 </script>
                 <script src="static/js/surescripts.js" type="text/javascript"></script>
                 <script src="static/js/nav_logic.js" type="text/javascript"></script>
+                <script src="static/js/spin.min.js" type="text/javascript"></script>
 
             </body>
         </html>
