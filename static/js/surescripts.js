@@ -82,7 +82,7 @@ function find_test_centers(lat,lon,radius,maxResults)
                      {
                      console.log(results)
                     //clear the table first in case you resubmit with different addresses
-                    $('#pharmacyTable tbody').html('<tr><th>Address</th><th>Distance</th></tr>');
+                    $('#pharmacyTable tbody').html('<tr><th>Address</th><th>Info</th><th>Distance</th></tr>');
                     //locations array is used by the google maps object
                     locations=[];
                      locations.push(["hi",map_center_lat,map_center_lng]);
