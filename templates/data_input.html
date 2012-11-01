@@ -69,8 +69,17 @@
 
                     <div class="tab-pane active" id="tabIntro">
                         <div class ="well">
+                            You were referred by: {{fbuser}}
                     The first two steps of this risk calculator are required. The remaining steps are optional, but the more information you provide, the better our risk estimate will be. If you need more information, use the FAQ link in the bar at the top of the screen. If you are using a mobile device like a phone, click the button at the top right of the screen for more options. 
                         </div>
+                        <div id="fb-root"></div>
+                                                
+                        <div align="center" id="fb_referral_div">
+                            You were referred by:<br>
+                            <img id="image"/>
+                            <div id="name"></div>
+                        </div>
+
 
                         <div class="control-group">
                                 <div class="controls">
@@ -170,7 +179,7 @@
                             </div><!--end control-group for stroke-->
 
                             <div class="control-group">
-                                <label class="control-label" >Do you have diabetes?</label>
+                                <label class="control-label" ><a class='infobox' id='diabetes_popover' rel="popover" data-content="Answer yes if you have diabetes mellitus type I or type II">Do you have diabetes?</a></label>
                                 <div class="controls">
                                     <label class="radio">
                                         <input type="radio" name="diabetes" id="diabetes_true" value="T" >
@@ -419,6 +428,7 @@
                     $('#mi_popover').popover({placement:'bottom'});
                     $('#systolic_popover').popover({placement:'bottom'});
                     $('#diastolic_popover').popover({placement:'bottom'});
+                    $('#diabetes_popover').popover({placement:'bottom'});
 
                     //avoid having popovers that are stuck on screen
                     $(':button').click(function(e){
@@ -507,9 +517,44 @@
 
                     });
                 </script>
+                <script>
+                            fbuser={{fbuser}}
+                            window.fbAsyncInit = function() {
+                                FB.init({
+                                    appId      : '151556668236323', // App ID
+                                    channelUrl : '//www.measrme.com/channel.html', // Channel File
+                                    status     : true, // check login status
+                                    cookie     : true, // enable cookies to allow the server to access the session
+                                    xfbml      : true  // parse XFBML
+                                });
+                                //first argument is the user id of the user you want to display
+                                FB.api('/{{fbuser}}', function(user) {
+                                    console.log(user)
+                                    if (user) {
+                                        var image = document.getElementById('image');
+                                        image.src = 'https://graph.facebook.com/' + user.id + '/picture';
+                                        var name = document.getElementById('name');
+                                        name.innerHTML = user.name
+                                    }
+                                });
+                            };
+                            // Load the SDK Asynchronously
+                            (function(d){
+                                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                                if (d.getElementById(id)) {return;}
+                                js = d.createElement('script'); js.id = id; js.async = true;
+                                js.src = "//connect.facebook.net/en_US/all.js";
+                                ref.parentNode.insertBefore(js, ref);
+                            }(document));
+                            if(fbuser==0){
+                                console.log('no facebook referral');
+                                $('#fb_referral_div').hide();
+                                }else{
+                                $('#fb_referral_div').show();
+                                }
+                        </script>
+
                 <script src="static/js/surescripts.js" type="text/javascript"></script>
                 <script src="static/js/nav_logic.js" type="text/javascript"></script>
-                <script src="static/js/spin.min.js" type="text/javascript"></script>
-
             </body>
         </html>

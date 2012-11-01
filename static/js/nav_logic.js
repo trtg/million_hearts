@@ -10,9 +10,7 @@ function submitStuff()
     data: collectData(),
     success: function (results)
     {
-        //alert(results);
         //jsonResults = jQuery.parseJSON(results);
-        //displayData(results);
         drawResultTable(results);
         console.log(results)
     }

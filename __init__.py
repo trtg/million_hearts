@@ -11,7 +11,12 @@ app.config['DEBUG']=True
 
 @app.route('/')
 def data_input():
-    return render_template('data_input.html')
+    app.logger.error(request.query_string)
+    userid = request.args.get('fbuser')
+    if userid is None:
+        userid=0
+
+    return render_template('data_input.html',fbuser=userid)
 
 @app.route('/find_test_centers')
 def find_test_center():
