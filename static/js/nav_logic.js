@@ -35,11 +35,38 @@ function collectData()
 function drawResultTable(jsonData)
 {
     console.log("in drawResultTable");
-    console.log('rating is ' +jsonData['Risk'][1]['rating']);
-    $('#riskTable tbody').html('<tr><td>Rating </td><td>'+jsonData['Risk'][1]['rating']+"</td></tr>");
-    $('#riskTable tr:last').after('<tr class="error"><td>Percentile </td><td>'+jsonData['Risk'][1]['riskPercentile']+"</td></tr>");
-    $('#riskTable tr:last').after('<tr class="success"><td>Rating for age </td><td>'+jsonData['Risk'][1]['ratingForAge']+"</td></tr>");
-    $('#riskTable tr:last').after('<tr><td>Comparison risk </td><td>'+jsonData['Risk'][1]['comparisonRisk']+"</td></tr>");
+    console.log(jsonData)
+    rating_for_age_map = {1:'low', 2:'medium',3:'high',4:'very high',5:'extremely high'};
+    //rating_for_age_map = {1:'low', 2:'medium',3:'high',4:'very high',5:'extremely high'};
+    //move this elsewhere and check for it in a better way
+    var all_biomarkers_entered=false
+       if(jsonData['Risk'][1]['rating']==''){
+           all_biomarkers_entered=true;
+       }
+    if (all_biomarkers_entered){
+        risk_msg=jsonData['Risk'][0]['risk'];
+        rating_msg=jsonData['Risk'][0]['rating'];
+        percentile_msg=jsonData['Risk'][0]['riskPercentile'];
+        rating_for_age_msg=rating_for_age_map[jsonData['Risk'][0]['ratingForAge']];
+        comparison_risk_msg=jsonData['Risk'][0]['comparisonRisk'];
+    }else{
+        risk_msg=jsonData['Risk'][2]['risk']+' to '+jsonData['Risk'][1]['risk'];
+        rating_msg=rating_for_age_map[jsonData['Risk'][2]['rating']]+' to '+rating_for_age_map[jsonData['Risk'][1]['rating']];
+        percentile_msg=jsonData['Risk'][2]['riskPercentile'] +' to '+jsonData['Risk'][1]['riskPercentile'];
+        rating_for_age_msg=rating_for_age_map[jsonData['Risk'][2]['ratingForAge']] + ' to '+rating_for_age_map[jsonData['Risk'][1]['ratingForAge']];
+        comparison_risk_msg=jsonData['Risk'][2]['comparisonRisk'] + ' to ' +jsonData['Risk'][1]['comparisonRisk'];
+    }
+    //console.log('rating is ' +jsonData['Risk'][1]['rating']);
+    $('#riskTable tbody').html('<tr class="error"><td>Your risk of having a heart attack or stroke is</td><td>'+rating_msg+"</td></tr>");
+    $('#riskTable tr:last').after('<tr class="error"><td>Risk compared to a healthy person your age</td><td>'+comparison_risk_msg+" times more likely to have a heart attack</td></tr>");
+    $('#riskTable tr:last').after('<tr><td>Your risk of having a heart attack or stroke in the next 5 years</td><td>'+risk_msg+"% </td></tr>");
+    $('#riskTable tr:last').after('<tr><td>Percentile </td><td>'+percentile_msg+" % of people your age and gender are less likely to contract CVD than you</td></tr>");
+    $('#riskTable tr:last').after('<tr><td>Your risk of having a heart attack or stroke</td><td>'+rating_for_age_msg+" for someone your age</td></tr>");
+
+    //$('#riskTable tbody').html('<tr><td>Rating </td><td>'+jsonData['Risk'][1]['rating']+"</td></tr>");
+    //$('#riskTable tr:last').after('<tr class="error"><td>Percentile </td><td>'+jsonData['Risk'][1]['riskPercentile']+"</td></tr>");
+    //$('#riskTable tr:last').after('<tr class="success"><td>Rating for age </td><td>'+jsonData['Risk'][1]['ratingForAge']+"</td></tr>");
+    //$('#riskTable tr:last').after('<tr><td>Comparison risk </td><td>'+jsonData['Risk'][1]['comparisonRisk']+"</td></tr>");
 }
 
 

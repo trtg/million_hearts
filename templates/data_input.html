@@ -353,15 +353,23 @@
 
                         <div id="fb-root"></div>
                                                 
-                        <!--put picture on left, message to right-->
                         <div align="center" id="fb_referral_div">
-                            Understand your risk so you can take of yourself. Get screened not just for yourself but for your loved ones. Do it for <br><div id="name"></div>
                             <img id="image"/>
+                            <div id="name"></div>
+                            Wants you to take care of your heart.
                         </div>
 
+                        <script>
+                            function fbs_click() {
+                                //u=location.href;
+                                u='http://www.measrme.com?fbuser=413012';
+                                t=document.title;
+                                window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');
+                                return false;}
+                        </script><style> html .fb_share_link { padding:2px 0 0 20px; height:16px; background:url(http://static.ak.facebook.com/images/share/facebook_share_icon.gif?6:26981) no-repeat top left; }</style><a rel="nofollow" href="http://www.facebook.com/share.php?u=<;url>" onclick="return fbs_click()" target="_blank" class="fb_share_link">Share on Facebook</a>
 
                         <div class="control-group">
-                                <div class="controls">
+                            <div class="controls">
                                     <button id="button_to_surescripts" type="submit" class="btn">Find a screening center</button>
                                 </div>
                             </div><!--end of control-group for button-->
@@ -389,7 +397,7 @@
                         Click any address below for directions.
                         <table class="table table-bordered table-condensed table-striped" id ="pharmacyTable">
                             <tbody>
-                                <tr><th>Address</th><th>Distance</th></tr>
+                                <tr><th>Address</th><th>Info</th><th>Distance</th></tr>
                                 </tbody>
                         </table>
                     </div><!--end testingResults-->
