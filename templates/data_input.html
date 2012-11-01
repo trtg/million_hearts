@@ -194,7 +194,13 @@
 
                             <div class="control-group">
                                 <div class="controls">
-                                    <button id="button_to_blood_tests" type="submit" class="btn">Next</button>
+                                    <div >
+                                         Click continue to provide more details and get a more accurate estimate.
+                                        </div>
+                                        <br>
+
+                                    <button id="button_to_blood_tests" type="submit" class="btn">Continue</button>
+                                    <button id="button_submit" type="submit" class="btn">Submit now</button>
                                 </div>
                             </div><!--end of control-group for button-->
                         </div><!--end form-horizontal-->
@@ -331,7 +337,7 @@
 
                             <div class="control-group">
                                 <div class="controls">
-                                    <button id="button_submit" type="submit" class="btn">Compute my risk</button>
+                                    <button id="button_submit2" type="submit" class="btn">Compute my risk</button>
                                 </div>
                             </div><!--end of control-group for button-->
 
@@ -476,7 +482,7 @@
                         $("#tab4_link a").attr('data-toggle','tab');
                         });
 
-                    $("#button_submit").click(function(e){
+                    $("#button_submit,#button_submit2").click(function(e){
                         $('#tabRisk_link').removeClass('invisible');
                         $('#myTab li:eq(5) a').tab('show');
                         $("#tabRisk_link").removeClass("disabled");

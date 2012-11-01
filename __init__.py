@@ -7,7 +7,7 @@ import json
 
 app = Flask(__name__,static_path='/static/')
 #never enable this when externally visible
-app.config['DEBUG']=True
+#app.config['DEBUG']=True
 
 @app.route('/')
 def data_input():
