@@ -72,12 +72,12 @@ function find_test_centers(lat,lon,radius,maxResults)
                 console.log('in find_test_centers')
                 //build query string here
                 var querystring="?apikey=3a0a572b-4f5d-47a2-9a75-819888576454&lat="+lat+"&lon="+lon+"&radius="+radius+"&maxResults="+maxResults;
-
+                
                 $.ajax({
                         crossDomain:true,
                         dataType:'json',
                         type:'get',
-                        url: location.href+'find_test_centers'+querystring,
+                        url: '/find_test_centers'+querystring,
                      success: function (results)
                      {
                      console.log(results)
