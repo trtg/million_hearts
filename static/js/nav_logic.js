@@ -82,7 +82,7 @@ function drawResultTable(jsonData)
         percentile_msg=jsonData['Risk'][2]['riskPercentile'] +' to '+jsonData['Risk'][1]['riskPercentile'];
         rating_for_age_msg=rating_for_age_map[jsonData['Risk'][2]['ratingForAge']] + ' to '+rating_for_age_map[jsonData['Risk'][1]['ratingForAge']];
         comparison_risk_msg=jsonData['Risk'][2]['comparisonRisk'] + ' to ' +jsonData['Risk'][1]['comparisonRisk'];
-        $('#interventions_collapse_link').html("Click on step 2 at left then click continue to get personalized recommendations here");
+        $('#interventions_collapse_link').html("Click on step 2 at left and then click continue to get personalized recommendations here");
         console.log($('#interventions_collapse_link').click)
 
             if(jsonData['Recommendation']!=0){
