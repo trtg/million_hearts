@@ -405,10 +405,22 @@
                         Click any address below for directions.
                         <table class="table table-bordered table-condensed table-striped" id ="pharmacyTable">
                             <tbody>
-                                <tr><th>Address</th><th>Info</th><th>Distance</th></tr>
+                                <tr><th>Address</th><th>Distance</th></tr>
                                 </tbody>
                         </table>
                     </div><!--end testingResults-->
+                    <div class="modal" id="screening_modal" role="dialog" aria-hidden="true">
+                            <div class="modal-body" id="screening_modal_body">
+                                Name:<div id="screening_modal_name"></div><br>
+                                Address(click for driving directions):<div id="screening_modal_address1"></div><br>
+                                City:<div id="screening_modal_city"></div><br>
+                                Phone:<div id="screening_modal_phone"></div><br>
+                                Description:<div id="screening_modal_description"></div><br>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" id="screening_modal_close_btn">Close</a>
+                                </div>
+                        </div>
                     </div><!--end tabTesting-->
 
 
@@ -454,6 +466,7 @@
                     $('#systolic_popover').popover({placement:'bottom'});
                     $('#diastolic_popover').popover({placement:'bottom'});
                     $('#diabetes_popover').popover({placement:'bottom'});
+                    $('#screening_modal').hide()
 
                     //avoid having popovers that are stuck on screen
                     $(':button').click(function(e){
@@ -538,6 +551,9 @@
                     $("#tabTesting_link a").click(function(e){ e.preventDefault() });
                     $("#systolicLabel").click(function(e){ e.preventDefault() });
                     $("#diastolicLabel").click(function(e){ e.preventDefault() });
+                    $("#screening_modal_close_btn").click(function(e){
+                            $('#screening_modal').hide();
+                            });
                     //$("#popover").popover();
 
                     });

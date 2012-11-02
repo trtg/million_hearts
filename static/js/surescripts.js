@@ -73,6 +73,7 @@ function find_test_centers(lat,lon,radius,maxResults)
                 //build query string here
                 var querystring="?apikey=3a0a572b-4f5d-47a2-9a75-819888576454&lat="+lat+"&lon="+lon+"&radius="+radius+"&maxResults="+maxResults;
                 
+                var location_objects={}
                 $.ajax({
                         crossDomain:true,
                         dataType:'json',
@@ -82,7 +83,7 @@ function find_test_centers(lat,lon,radius,maxResults)
                      {
                      console.log(results)
                     //clear the table first in case you resubmit with different addresses
-                    $('#pharmacyTable tbody').html('<tr><th>Address</th><th>Info</th><th>Distance</th></tr>');
+                    $('#pharmacyTable tbody').html('<tr><th>Address</th><th>Distance</th></tr>');
                     //locations array is used by the google maps object
                     locations=[];
                      locations.push(["hi",map_center_lat,map_center_lng]);
@@ -90,11 +91,28 @@ function find_test_centers(lat,lon,radius,maxResults)
                          var directions_link = 'Click <a href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>here </a> for driving directions to:<br> '+obj['address1']
                          locations.push([directions_link,obj['lat'],obj['lon']])
                          
-                         var short_directions = '<a href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>'+obj['address1'] +'</a>'
 
-                         $('#pharmacyTable tr:last').after('<tr><td>'+short_directions+'</td><td>'+obj['distance'].toFixed(1)+"</td></tr>");
+                         //$('#pharmacyTable tr:last').after('<tr><td>'+short_directions+'</td><td>'+"<a class='infobox surescripts_info' data-content='hi there'>"+'click me'+'</a></td><td>'+obj['distance'].toFixed(1)+"</td></tr>");
+                         //$('#pharmacyTable tr:last').after('<tr><td>'+short_directions+'</td><td>'+obj['distance'].toFixed(1)+"</td></tr>");//original
+                         var modal_dialog_link='<a href=\'#\' class="modal_link">'+obj['address1']+'</a>'
+                         
+                         $('#pharmacyTable tr:last').after('<tr><td>'+modal_dialog_link+'</td><td>'+obj['distance'].toFixed(1)+"</td></tr>");
+                         location_objects[obj['address1']]=obj;
+                         });
+                     console.log(location_objects)
+                     $('.modal_link').click(function(e){
+                            var obj = location_objects[$(this).html()];
+                             var short_directions = '<a target=\'blank\' href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>'+obj['address1'] +'</a>'
+                             $('#screening_modal_name').html(obj['name'])
+                             $('#screening_modal_address1').html(short_directions)
+                             $('#screening_modal_city').html(obj['city'])
+                             $('#screening_modal_phone').html(obj['phone'])
+                             $('#screening_modal_description').html(obj['description'])
+                             $('#screening_modal').toggle()
+                             console.log($(this).html());
                          });
 
+                     $('.surescripts_info').popover({placement:'bottom'});
                      //drawMap(); //this should be done separately/optionally
                      }});
             }
