@@ -115,7 +115,7 @@
                             <div class="control-group">
                                 <label class="control-label" for="inputWeight">Weight(lbs)</label>
                                 <div class="controls">
-                                    <input type="text" id="inputWeight" name="weight" placeholder="Please enter your weight" value="160">
+                                    <input type="text" id="inputWeight" name="weight" placeholder="Please enter your weight" value="200">
                                 </div>
                             </div><!--end control-group for Weight-->
 
@@ -286,7 +286,7 @@
                                 </div>
                             </div><!--end control-group for bloodpressuremeds-->
 
-                            <div class="control-group">
+                            <div class="control-group" id="number_blood_pressure_meds_group">
                                 <label class="control-label" for="inputBloodpressuremedcount">How many different blood pressure medications do you take?</label>
                                 <div class="controls">
                                     <input type="text" id="inputBloodpressuremedcount" name="bloodpressuremedcount" placeholder="Enter how many">
@@ -359,6 +359,9 @@
                                 </tbody>
                         </table>
 
+                        <div id="dr_or_screening_recommendation">
+                            </div>
+
                         <div class="accordion" id="intervention_accordion">
                             <div class="accordion-group">
                                 <div class="accordion-heading">
@@ -390,9 +393,9 @@
                         <div id="fb-root"></div>
                                                 
                         <div align="center" id="fb_referral_div">
-                            <img id="image"/>
-                           Understand your risk so you can take care of yourself. Do it not just for yourself, but for your loved ones.  Take care of your heart for  
-                            <div id="name"></div>
+                            <img id="image" height="100" width="100"/><br>
+                            Understand your risk so you can take care of yourself. <br>Do it not just for yourself, but for your loved ones.<br>  Take care of your heart for  
+                            <span id="name"></span>
                         </div>
 
                         <script>
@@ -569,6 +572,9 @@
                         });
 
 
+                    $("#number_blood_pressure_meds_group").hide();
+                    $("#bloodpressure_meds_true").click(function(){ $("#number_blood_pressure_meds_group").show(); });
+                    $("#bloodpressure_meds_false").click(function(){ $("#number_blood_pressure_meds_group").hide(); });
                     $("#hba1c_group").hide();
                     $("#diabetes_true").click(function(){ $("#hba1c_group").show(); });
                     $("#diabetes_false").click(function(){ $("#hba1c_group").hide(); });

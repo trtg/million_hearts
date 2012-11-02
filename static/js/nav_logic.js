@@ -37,6 +37,8 @@ function drawResultTable(jsonData)
     console.log("in drawResultTable");
     console.log(jsonData)
     rating_for_age_map = {1:'low', 2:'medium',3:'high',4:'very high',5:'extremely high'};
+    doctor_recommendation_map={0:'No additional screening', 1:'You should discuss your heart risk with your doctor and any steps you take to reduce your risk',2:'It is important for you to visit your doctor and discuss your heart risk and steps you can take to reduce your risk.',3:'It is extremely important you see a doctor immediately and discuss the steps needed for you to reduce your heart risk.'};
+    screening_recommendation_map={0: 'No additional screening is needed.',1: 'You are in a lower risk category but screening would be useful. It is important to know your blood pressure and cholesterol to better understand your risk and keep track of it over time.',2: 'You could be at high or very high risk for your age so screening is important. You should get screened for your blood pressure and cholesterol and take action.',3: 'Screening is urgent as you are likely to be at very high risk and treatment could be critical.'}
     //back up click handler which allows collapsing accordion and restore it once you have all biomarkers
     //console.log($('#interventions_collapse_link'))
     //var original_click_handler=$('#interventions_collapse_link').data('events').click[0].handler;
@@ -67,6 +69,9 @@ function drawResultTable(jsonData)
         $('#smoking_risk_reduction').html(jsonData['Interventions']['PercentReductionWithSmokingCessation']);
         $('#total_risk_reduction').html(jsonData['Interventions']['PercentReductionWithAllInterventions']);
         $('#interventions_collapse_link').html("Recommendations for you");
+
+        $('#dr_or_screening_recommendation').html(doctor_recommendation_map[jsonData['DoctorRecommendation']]);
+
     }else{
         rating_msg=rating_for_age_map[jsonData['Risk'][2]['rating']]+' to '+rating_for_age_map[jsonData['Risk'][1]['rating']];
         risk_msg=jsonData['Risk'][2]['risk']+' to '+jsonData['Risk'][1]['risk'];
