@@ -103,7 +103,7 @@ function find_test_centers(lat,lon,radius,maxResults)
                      $('.modal_link').click(function(e){
                             var obj = location_objects[$(this).html()];
                              var short_directions = '<a target=\'blank\' href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>'+obj['address1'] +'</a>'
-                             $('#screening_modal_name').html(obj['name'])
+                             $('#screening_modal_name').html('<h4>'+obj['name']+'</h4>')
                              $('#screening_modal_address1').html(short_directions)
                              $('#screening_modal_city').html(obj['city'])
                              $('#screening_modal_phone').html(obj['phone'])

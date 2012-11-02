@@ -410,8 +410,11 @@
                         </table>
                     </div><!--end testingResults-->
                     <div class="modal" id="screening_modal" role="dialog" aria-hidden="true">
+                        <div class="modal-header">
+                            <button type="button" id="screening_modal_close_btn_top" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                            <div id="screening_modal_name"></div>
+                            </div><!--end modal-header-->
                             <div class="modal-body" id="screening_modal_body">
-                                Name:<div id="screening_modal_name"></div><br>
                                 Address(click for driving directions):<div id="screening_modal_address1"></div><br>
                                 City:<div id="screening_modal_city"></div><br>
                                 Phone:<div id="screening_modal_phone"></div><br>
@@ -551,7 +554,7 @@
                     $("#tabTesting_link a").click(function(e){ e.preventDefault() });
                     $("#systolicLabel").click(function(e){ e.preventDefault() });
                     $("#diastolicLabel").click(function(e){ e.preventDefault() });
-                    $("#screening_modal_close_btn").click(function(e){
+                    $("#screening_modal_close_btn, #screening_modal_close_btn_top").click(function(e){
                             $('#screening_modal').hide();
                             });
                     //$("#popover").popover();
