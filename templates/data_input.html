@@ -359,6 +359,34 @@
                                 </tbody>
                         </table>
 
+                        <div class="accordion" id="intervention_accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" id="interventions_collapse_link" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                       Recommendations for you 
+                                    </a>
+                                </div>
+                                <div id="collapseOne" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        <table class="table table-bordered table-condensed" id ="interventionTable">
+                                            <tbody>
+                                                <tr><td>Your current medications reduce your risk by about <span id="current_medication_risk_reduction"></span>% compared to not taking them </td></tr>
+                                                <tr><td>A doctor may be able to reduce your risk by about <span id="new_medication_risk_reduction"></span>% by managing your blood pressure and cholesterol</td></tr>
+                                                <tr><td>Adding 3 hours/week of moderate exercise will reduce your risk by <span id="moderate_exercise_risk_reduction"></span>%</td></tr>
+                                                <tr><td>Adding 3 hours/week of vigorous exercise will reduce your risk by <span id="vigorous_exercise_risk_reduction"></span>%</td></tr>
+                                                <tr><td>If you lose <span id="pounds_to_lose"></span> pounds you will reduce your risk by <span id="weight_loss_risk_reduction"></span> </td></tr>
+                                                <tr><td>If you quit smoking you will reduce your risk by <span id="smoking_risk_reduction"></span>%</td></tr>
+                                                <tr><td>If you follow all of the recommendations above you will reduce your risk by <span id="total_risk_reduction"></span> </td></tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div><!--end accordion-group-->
+                        </div><!--end intervention_accordion-->
+
+
+
                         <div id="fb-root"></div>
                                                 
                         <div align="center" id="fb_referral_div">

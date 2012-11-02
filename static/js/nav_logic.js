@@ -12,7 +12,7 @@ function submitStuff()
     {
         //jsonResults = jQuery.parseJSON(results);
         drawResultTable(results);
-        console.log(results)
+        //console.log(results)
     }
     });
     //surescripts API currently only returns data near minneapolis
@@ -37,6 +37,10 @@ function drawResultTable(jsonData)
     console.log("in drawResultTable");
     console.log(jsonData)
     rating_for_age_map = {1:'low', 2:'medium',3:'high',4:'very high',5:'extremely high'};
+    //back up click handler which allows collapsing accordion and restore it once you have all biomarkers
+    //console.log($('#interventions_collapse_link'))
+    //var original_click_handler=$('#interventions_collapse_link').data('events').click[0].handler;
+
     //rating_for_age_map = {1:'low', 2:'medium',3:'high',4:'very high',5:'extremely high'};
     //move this elsewhere and check for it in a better way
     var all_biomarkers_entered=false
@@ -44,17 +48,38 @@ function drawResultTable(jsonData)
            all_biomarkers_entered=true;
        }
     if (all_biomarkers_entered){
+        //restore collapsibility
+        //$('#interventions_collapse_link').bind('click',original_click_handler);
+
         rating_msg=rating_for_age_map[jsonData['Risk'][0]['rating']];
         risk_msg=jsonData['Risk'][0]['risk'];
         percentile_msg=jsonData['Risk'][0]['riskPercentile'];
         rating_for_age_msg=rating_for_age_map[jsonData['Risk'][0]['ratingForAge']];
         comparison_risk_msg=jsonData['Risk'][0]['comparisonRisk'];
+
+        $('#current_medication_risk_reduction').html(jsonData['Interventions']['IncreaseInRisk']);
+        $('#new_medication_risk_reduction').html(jsonData['Interventions']['PercentReductionInRiskWithMedication']);
+        $('#moderate_exercise_risk_reduction').html(jsonData['Interventions']['PercentReductionInRiskWithAdditionalModerateExercise']);
+        $('#vigorous_exercise_risk_reduction').html(jsonData['Interventions']['PercentReductionInRiskWithAdditionalVigorousExercise']);
+
+        $('#weight_loss_risk_reduction').html(jsonData['Interventions']['PercentReductionInRiskWithWeightLoss']);
+        $('#pounds_to_lose').html(jsonData['Interventions']['PoundsOfWeightLossRequired']);
+        $('#smoking_risk_reduction').html(jsonData['Interventions']['PercentReductionWithSmokingCessation']);
+        $('#total_risk_reduction').html(jsonData['Interventions']['PercentReductionWithAllInterventions']);
+        $('#interventions_collapse_link').html("Recommendations for you");
     }else{
         rating_msg=rating_for_age_map[jsonData['Risk'][2]['rating']]+' to '+rating_for_age_map[jsonData['Risk'][1]['rating']];
         risk_msg=jsonData['Risk'][2]['risk']+' to '+jsonData['Risk'][1]['risk'];
         percentile_msg=jsonData['Risk'][2]['riskPercentile'] +' to '+jsonData['Risk'][1]['riskPercentile'];
         rating_for_age_msg=rating_for_age_map[jsonData['Risk'][2]['ratingForAge']] + ' to '+rating_for_age_map[jsonData['Risk'][1]['ratingForAge']];
         comparison_risk_msg=jsonData['Risk'][2]['comparisonRisk'] + ' to ' +jsonData['Risk'][1]['comparisonRisk'];
+        $('#interventions_collapse_link').html("Click on step 2 at left then click continue to get personalized recommendations here");
+        console.log($('#interventions_collapse_link').click)
+
+            //tried saving and restoring click handler, but this doesn't seem to work
+        //$('#interventions_collapse_link').click(function(e){
+        //    $('#myTab li:eq(2) a').tab('show');
+        //});
     }
     //console.log('rating is ' +jsonData['Risk'][1]['rating']);
     $('#riskTable tbody').html('<tr class="error"><td>Your risk of having a heart attack or stroke is</td><td><b>'+rating_msg+"</b></td></tr>");
@@ -63,6 +88,7 @@ function drawResultTable(jsonData)
     $('#riskTable tr:last').after('<tr><td>Percentile </td><td><b>'+percentile_msg+"</b> % of people your age and gender are less likely to contract CVD than you</td></tr>");
     $('#riskTable tr:last').after('<tr><td>Your risk of having a heart attack or stroke</td><td><b>'+rating_for_age_msg+"</b> for someone your age</td></tr>");
 
+    
 }
 
 
