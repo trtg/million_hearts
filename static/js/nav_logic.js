@@ -70,7 +70,11 @@ function drawResultTable(jsonData)
         $('#total_risk_reduction').html(jsonData['Interventions']['PercentReductionWithAllInterventions']);
         $('#interventions_collapse_link').html("Recommendations for you");
 
-        $('#dr_or_screening_recommendation').html(doctor_recommendation_map[jsonData['DoctorRecommendation']]);
+        if(jsonData['DoctorRecommendation']!=0){
+            $('#dr_or_screening_recommendation').html(doctor_recommendation_map[jsonData['DoctorRecommendation']]);
+        }else{
+            $('#dr_or_screening_recommendation').html("");
+        }
 
     }else{
         rating_msg=rating_for_age_map[jsonData['Risk'][2]['rating']]+' to '+rating_for_age_map[jsonData['Risk'][1]['rating']];
@@ -81,6 +85,11 @@ function drawResultTable(jsonData)
         $('#interventions_collapse_link').html("Click on step 2 at left then click continue to get personalized recommendations here");
         console.log($('#interventions_collapse_link').click)
 
+            if(jsonData['Recommendation']!=0){
+                $('#dr_or_screening_recommendation').html(screening_recommendation_map[jsonData['Recommendation']]);
+            }else{
+                $('#dr_or_screening_recommendation').html("");
+            }
             //tried saving and restoring click handler, but this doesn't seem to work
         //$('#interventions_collapse_link').click(function(e){
         //    $('#myTab li:eq(2) a').tab('show');
