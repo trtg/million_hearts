@@ -95,6 +95,22 @@ function drawResultTable(jsonData)
         //    $('#myTab li:eq(2) a').tab('show');
         //});
     }
+    if($('#smoker_true').is(':checked')){
+            $('#smoking_row').show();
+        }else{
+            $('#smoking_row').hide();
+        }
+    if($('#aspirin_true').is(':checked') | $('#bloodpressure_meds_true').is(':checked') |$('#cholesterol_meds_true').is(':checked')){
+            $('#current_medication_row').show();
+        }else{
+            $('#current_medication_row').hide();
+        }
+
+if(jsonData['Interventions']['PoundsOfWeightLossRequired'].length!=0){
+    $('#weight_loss_row').show();
+}else{
+    $('#weight_loss_row').hide();
+}
     //console.log('rating is ' +jsonData['Risk'][1]['rating']);
     $('#riskTable tbody').html('<tr class="error"><td>Your risk of having a heart attack or stroke is</td><td><b>'+rating_msg+"</b></td></tr>");
     $('#riskTable tr:last').after('<tr class="error"><td>Risk compared to a healthy person your age</td><td><b>'+comparison_risk_msg+"</b> times more likely to have a heart attack</td></tr>");
