@@ -601,7 +601,7 @@
                                     });
                                     //first argument is the user id of the user you want to display
                                     FB.api('/{{fbuser}}', function(user) {
-                                        console.log(user)
+                                        //console.log(user)
                                         if (user) {
                                             var image = document.getElementById('image');
                                             image.src = 'https://graph.facebook.com/' + user.id + '/picture';

@@ -12,7 +12,6 @@ function submitStuff()
     {
         //jsonResults = jQuery.parseJSON(results);
         drawResultTable(results);
-        //console.log(results)
     }
     });
     //surescripts API currently only returns data near minneapolis
@@ -28,14 +27,13 @@ function collectData()
                 })
     .get()
         .join("&");
-    console.log(allInputs);
+    //console.log(allInputs);
     return allInputs;
 }
 
 function drawResultTable(jsonData)
 {
-    console.log("in drawResultTable");
-    console.log(jsonData)
+    //console.log(jsonData)
     rating_for_age_map = {1:'low', 2:'medium',3:'high',4:'very high',5:'extremely high'};
     doctor_recommendation_map={0:'No additional screening', 1:'You should discuss your heart risk with your doctor and any steps you take to reduce your risk',2:'It is important for you to visit your doctor and discuss your heart risk and steps you can take to reduce your risk.',3:'It is extremely important you see a doctor immediately and discuss the steps needed for you to reduce your heart risk.'};
     screening_recommendation_map={0: 'No additional screening is needed.',1: 'You are in a lower risk category but screening would be useful. It is important to know your blood pressure and cholesterol to better understand your risk and keep track of it over time.',2: 'You could be at high or very high risk for your age so screening is important. You should get screened for your blood pressure and cholesterol and take action.',3: 'Screening is urgent as you are likely to be at very high risk and treatment could be critical.'}
@@ -83,7 +81,6 @@ function drawResultTable(jsonData)
         rating_for_age_msg=rating_for_age_map[jsonData['Risk'][2]['ratingForAge']] + ' to '+rating_for_age_map[jsonData['Risk'][1]['ratingForAge']];
         comparison_risk_msg=jsonData['Risk'][2]['comparisonRisk'] + ' to ' +jsonData['Risk'][1]['comparisonRisk'];
         $('#interventions_collapse_link').html("Click on step 2 at left and then click continue to get personalized recommendations here");
-        console.log($('#interventions_collapse_link').click)
 
             if(jsonData['Recommendation']!=0){
                 $('#dr_or_screening_recommendation').html(screening_recommendation_map[jsonData['Recommendation']]);
@@ -111,7 +108,6 @@ if(jsonData['Interventions']['PoundsOfWeightLossRequired'].length!=0){
 }else{
     $('#weight_loss_row').hide();
 }
-    //console.log('rating is ' +jsonData['Risk'][1]['rating']);
     $('#riskTable tbody').html('<tr class="error"><td>Your risk of having a heart attack or stroke is</td><td><b>'+rating_msg+"</b></td></tr>");
     $('#riskTable tr:last').after('<tr class="error"><td>Risk compared to a healthy person your age</td><td><b>'+comparison_risk_msg+"</b> times more likely to have a heart attack</td></tr>");
     $('#riskTable tr:last').after('<tr><td>Your risk of having a heart attack or stroke in the next 5 years</td><td><b>'+risk_msg+"%</b> </td></tr>");

@@ -1,11 +1,10 @@
 //html5 location api:
 function geocode(addr){
-    console.log('geocode called with '+addr);
+    //console.log('geocode called with '+addr);
     address=addr;
     map.geocode({'address' : addr }, function(results, status){
             map_center_lat = results[0].geometry.location.lat();
             map_center_lng = results[0].geometry.location.lng();
-            console.log("map_center_lat " +map_center_lat);
             find_test_centers(map_center_lat,map_center_lng,10,10);
             });
 }
@@ -16,8 +15,7 @@ function reverse_geocode(lat,lng){
     map.geocode({'latLng' : latlng }, function(results, status){
             if(status ==google.maps.GeocoderStatus.OK){
                 if(results[0]){
-                console.log("reverse geocoding");
-                console.log(results[0].formatted_address);
+                //console.log(results[0].formatted_address);
                 address=results[0].formatted_address;
                 }
             }
@@ -26,10 +24,9 @@ function reverse_geocode(lat,lng){
 
 function get_device_location(){
   navigator.geolocation.getCurrentPosition(function(d){
-          console.log('in navigator')
           map_center_lat = d['coords']['latitude']
           map_center_lng = d['coords']['longitude']
-          console.log(d);
+          //console.log(d);
           reverse_geocode(map_center_lat,map_center_lng);//for google maps
           find_test_centers(map_center_lat,map_center_lng,10,10);
           });
@@ -46,8 +43,7 @@ function drawMap(){
     var infowindow = new google.maps.InfoWindow();
 
     var marker, i;
-    console.log("in drawMap");
-    console.log(locations);
+    //console.log(locations);
     for (i = 0; i < locations.length; i++) {  
         marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
@@ -69,7 +65,6 @@ function drawMap(){
 //call to avoid differing behavior between chrome and firefox
 function find_test_centers(lat,lon,radius,maxResults)
             {
-                console.log('in find_test_centers')
                 //build query string here
                 var querystring="?apikey=3a0a572b-4f5d-47a2-9a75-819888576454&lat="+lat+"&lon="+lon+"&radius="+radius+"&maxResults="+maxResults;
                 
@@ -81,7 +76,7 @@ function find_test_centers(lat,lon,radius,maxResults)
                         url: '/find_test_centers'+querystring,
                      success: function (results)
                      {
-                     console.log(results)
+                     //console.log(results)
                     //clear the table first in case you resubmit with different addresses
                     $('#pharmacyTable tbody').html('<tr><th>Address</th><th>Distance</th></tr>');
                     //locations array is used by the google maps object
@@ -99,7 +94,8 @@ function find_test_centers(lat,lon,radius,maxResults)
                          $('#pharmacyTable tr:last').after('<tr><td>'+modal_dialog_link+'</td><td>'+obj['distance'].toFixed(1)+"</td></tr>");
                          location_objects[obj['address1']]=obj;
                          });
-                     console.log(location_objects)
+
+
                      $('.modal_link').click(function(e){
                             var obj = location_objects[$(this).html()];
                              var short_directions = '<a target=\'blank\' href=\'http://maps.google.com/maps?saddr=\x22'+address+'\x22&daddr=\x22'+obj['address1']+','+obj['city']+','+obj['state'] +'\x22\'>'+obj['address1'] +'</a>'
@@ -109,7 +105,7 @@ function find_test_centers(lat,lon,radius,maxResults)
                              $('#screening_modal_phone').html(obj['phone'])
                              $('#screening_modal_description').html(obj['description'])
                              $('#screening_modal').toggle()
-                             console.log($(this).html());
+                             //console.log($(this).html());
                          });
 
                      $('.surescripts_info').popover({placement:'bottom'});
