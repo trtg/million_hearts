@@ -1,11 +1,7 @@
 //explicitly specify expected return dataType in $.ajax
 //call to avoid differing behavior between chrome and firefox
-
-
-
 function submitStuff()
 {
-    $.support.cors = true;
     $.ajax({
         crossDomain: true,
     type: 'post',
