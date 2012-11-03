@@ -70,7 +70,7 @@ function find_test_centers(lat,lon,radius,maxResults)
                 
                 var location_objects={}
                 $.ajax({
-                        crossDomain:true,
+                        crossDomain:false,
                         dataType:'json',
                         type:'get',
                         url: '/find_test_centers'+querystring,

@@ -3,7 +3,7 @@
 function submitStuff()
 {
     $.ajax({
-        crossDomain: true,
+        crossDomain: false,
     type: 'post',
     url: '/do_archimedes',
     dataType:'json',
