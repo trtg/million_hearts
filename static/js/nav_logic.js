@@ -1,5 +1,55 @@
 //explicitly specify expected return dataType in $.ajax
 //call to avoid differing behavior between chrome and firefox
+
+$.ajaxTransport("+*", function( options, originalOptions, jqXHR ) {
+
+    if(jQuery.browser.msie && window.XDomainRequest) {
+
+        var xdr;
+
+        return {
+
+            send: function( headers, completeCallback ) {
+
+                // Use Microsoft XDR
+                xdr = new XDomainRequest();
+
+                xdr.open("get", options.url);
+
+                xdr.onload = function() {
+
+                    if(this.contentType.match(/\/xml/)){
+
+                        var dom = new ActiveXObject("Microsoft.XMLDOM");
+                        dom.async = false;
+                        dom.loadXML(this.responseText);
+                        completeCallback(200, "success", [dom]);
+
+                    }else{
+
+                        completeCallback(200, "success", [this.responseText]);
+
+                    }
+
+                };
+
+                xdr.ontimeout = function(){
+                    completeCallback(408, "error", ["The request timed out."]);
+                };
+
+                xdr.onerror = function(){
+                    completeCallback(404, "error", ["The requested resource could not be found."]);
+                };
+
+                xdr.send();
+          },
+          abort: function() {
+              if(xdr)xdr.abort();
+          }
+        };
+      }
+    });
+
 function submitStuff()
 {
     $.support.cors = true;
