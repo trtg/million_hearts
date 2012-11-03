@@ -5,7 +5,7 @@ function submitStuff()
     $.ajax({
         crossDomain: true,
     type: 'post',
-    url: 'https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health',
+    url: '/do_archimedes',
     dataType:'json',
     data: collectData(),
     success: function (results)
