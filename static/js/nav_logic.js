@@ -103,6 +103,12 @@ function drawResultTable(jsonData)
             $('#current_medication_row').hide();
         }
 
+    if(jsonData['Interventions']['PercentReductionInRiskWithMedication']==0){
+            $('#new_medication_row').hide();
+    }else{
+            $('#new_medication_row').show();
+        }
+
 if(jsonData['Interventions']['PoundsOfWeightLossRequired'].length!=0){
     $('#weight_loss_row').show();
 }else{
