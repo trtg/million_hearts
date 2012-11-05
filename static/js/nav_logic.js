@@ -20,7 +20,7 @@ function submitStuff()
 
 function collectData()
 {
-    var allInputs = $(':text, :checked')
+    var allInputs = $('input:text, input:checked')
         .map(function ()
                 {
                     return $(this).attr("name") + "=" + $(this).val()
